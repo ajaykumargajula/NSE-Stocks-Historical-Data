@@ -1,4 +1,4 @@
-import sys
+import os
 from google.cloud import storage
 import pandas as pd
 import requests
@@ -25,11 +25,13 @@ kite_instruments = get_data(kite_inst_url)
 
 '''
 chunk of code to upload data to Google cloud storage buckets
+# Only need this if you're running this code locally.
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'/your_GCP_creds/credentials.json'
 client = storage.Client()
 bucket = client.get_bucket('<Google Cloud Bucket name>')
 bucket.blob('symbols/nse_securities.csv').upload_from_string(nse_securities.to_csv(), 'text/csv')
 bucket.blob('symbols/kite_instruments.csv').upload_from_string(kite_instruments.to_csv(), 'text/csv')'''
 
-#save data to local copy
+#save data to local 
 nse_securities.to_csv('nse_securities.csv')
 kite_instruments.to_csv('kite_instruments.csv')
